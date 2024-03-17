@@ -1,0 +1,21 @@
+
+services:
+  app:
+    image: prod_service:local
+    container_name: vk-backend
+    depends_on:
+      - postgresql
+    ports:
+      - 8080:8080
+
+  postgresql:
+    restart: always
+    image: postgres:16
+    container_name: vk-psql
+    env_file:
+      - ./config/.env
+    volumes:
+    - ./dataDB:/var/lib/postgresql/data
+    - ./vktest.sql:/docker-entrypoint-initdb.d/001.sql
+    
+ 
